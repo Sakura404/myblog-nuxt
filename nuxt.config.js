@@ -99,8 +99,8 @@ export default {
 
          new CompressionPlugin({
 
-            test: /\.js$|\.html$|\.css/, // 匹配文件名
-
+            test: /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i, // 匹配文件名
+            filename: "[path][base].gz",
             threshold: 10240, // 对超过10kb的数据进行压缩
 
             deleteOriginalAssets: false // 是否删除原文件

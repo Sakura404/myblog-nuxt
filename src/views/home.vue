@@ -142,7 +142,7 @@ export default {
     },
   },
   mounted: function () {
-    this.$axios.get("http://112.74.125.3:8888/bing").then((res) => {
+    this.$axios.get("http://senkaryouran.top/bing").then((res) => {
       let imgSrc = `https://bing.com${res.data.images[0].url}`;
       const primise = new Promise((resolve, reject) => {
         let img = new Image();

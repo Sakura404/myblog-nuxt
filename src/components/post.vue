@@ -415,7 +415,7 @@ export default {
         {
           hid: "description",
           name: "description",
-          content: this.post.title,
+          content: this.post.excerpt,
         },
       ],
     };
