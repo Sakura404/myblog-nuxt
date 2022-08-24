@@ -1,10 +1,6 @@
 <template>
   <div style="background-color: white" :style="headStyle">
-    <div
-      id="headinfo"
-      :style="loginBackgroundSrc"
-      style="height: 100vh"
-    >
+    <div id="headinfo" :style="loginBackgroundSrc" style="height: 100vh">
       <div
         :style="rotate_one"
         @mouseleave="rotateOff()"
@@ -125,6 +121,9 @@ export default {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight };
     },
   },
+  asyncData({ app }) {
+    return { bg: app.$randomImg.cdnRandomImg() };
+  },
 };
 </script>
 
@@ -161,7 +160,7 @@ export default {
   transition: all 0.5s ease-in-out;
 }
 #headinfo {
-  background-image: url(../assets/dcbg.jpg);
+  /* background-image: url(../assets/dcbg.jpg); */
   background-position: top center;
   background-repeat: no-repeat;
   background-attachment: fixed;

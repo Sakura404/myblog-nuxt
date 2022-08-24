@@ -315,7 +315,7 @@ export default {
           if (res.data.code == 10000) {
             this.postguide = res.data.data;
             this.postguide.forEach((e) => {
-              e.img = this.$randomImg.cdnRandomImg();
+              if (!e.img) e.img = this.$randomImg.cdnRandomImg();
             });
           }
         });
@@ -384,9 +384,7 @@ export default {
   mounted() {
     if (this.emptyPost) this.$router.push("./");
     let that = this;
-    window.onload = function () {
-      that.tonavlist();
-    };
+    that.tonavlist();
     window.addEventListener("scroll", this.handleScroll, true);
   },
   updated() {

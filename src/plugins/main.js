@@ -5,6 +5,7 @@ import Moment from 'moment'
 import 'moment/locale/zh-cn'
 import VueTinymce from "@packy-tang/vue-tinymce";
 
+Moment.locale('zh-cn');
 Vue.use(Prism)
 if (process.client) {
    Vue.prototype.$tinymce = tinymce; // 将全局tinymce对象指向给Vue作用域下

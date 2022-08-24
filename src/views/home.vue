@@ -42,10 +42,7 @@
       class="toolwhite"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"> </v-app-bar-nav-icon>
-      <v-app-bar-title
-        ><h1 style="display: none">散の華</h1>
-        散の華</v-app-bar-title
-      >
+      <v-app-bar-title>散の華</v-app-bar-title>
       <v-spacer></v-spacer>
       <!-- 
       <v-btn icon>

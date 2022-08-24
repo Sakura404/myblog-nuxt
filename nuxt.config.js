@@ -1,5 +1,6 @@
-import colors from 'vuetify/es5/util/colors'
 import CompressionPlugin from 'compression-webpack-plugin'
+import minifyTheme from 'minify-css-string'
+
 export default {
    // Global page headers: https://go.nuxtjs.dev/config-head
    srcDir: 'src/',
@@ -57,18 +58,21 @@ export default {
    vuetify: {
       customVariables: ['~/assets/variables.scss'],
       theme: {
-         themes: {
-            dark: {
-               primary: colors.blue.darken2,
-               accent: colors.grey.darken3,
-               secondary: colors.amber.darken3,
-               info: colors.teal.lighten1,
-               warning: colors.amber.base,
-               error: colors.deepOrange.accent4,
-               success: colors.green.accent3
-            }
-         }
-      }
+         options: { minifyTheme },
+      },
+      // theme: {
+      //    themes: {
+      //       dark: {
+      //          primary: colors.blue.darken2,
+      //          accent: colors.grey.darken3,
+      //          secondary: colors.amber.darken3,
+      //          info: colors.teal.lighten1,
+      //          warning: colors.amber.base,
+      //          error: colors.deepOrange.accent4,
+      //          success: colors.green.accent3
+      //       }
+      //    }
+      // }
    },
 
    // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -82,7 +86,8 @@ export default {
 
             maxSize: 250000
 
-         }
+         },
+
       },
 
       babel: {
@@ -108,6 +113,8 @@ export default {
          })
 
       ],
+
+
    },
    // proxy: {
    //    '/api': {
@@ -140,5 +147,6 @@ export default {
    },
    router: {
       base: '/'
-   }
+   },
+   Ignore: [/^\.\/locale$/, /moment$/]
 }

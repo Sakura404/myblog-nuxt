@@ -16,6 +16,7 @@
     "axios": "^0.21.4",
     "babel-plugin-prismjs": "^2.1.0",
     "core-js": "^3.19.3",
+    "minify-css-string": "^1.0.0",
     "moment": "^2.29.1",
     "nuxt": "^2.15.8",
     "prismjs": "^1.28.0",
