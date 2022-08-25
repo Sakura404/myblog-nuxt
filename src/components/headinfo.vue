@@ -84,7 +84,7 @@ export default {
 
   methods: {
     randomImg() {
-      return `background-image: url(../assets/bg/${
+      return `background-image: url(../assets/docsmall/${
         Math.floor(Math.random() * 16) + 1
       }.jpg)`;
     },
