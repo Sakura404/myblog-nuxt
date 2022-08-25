@@ -6,6 +6,7 @@
     <p>mvvc框架Vue ,组件库Vuetify ,文本编辑器Tinymce,</p>
     <h2>后端</h2>
     <p>SpringBoot,mybatis,jsonwebtoken</p>
+    <p>nuxt.实现ssr，github action 实现自动部署</p>
   </home-template>
 </template>
 <script>
@@ -14,7 +15,7 @@ export default {
   components: { homeTemplate },
   head() {
     return {
-      title: '关于',
+      title: "关于",
     };
   },
 };
