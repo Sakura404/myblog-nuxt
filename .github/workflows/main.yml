@@ -14,19 +14,19 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest # 使用ubuntu系统镜像运行自动化脚本
     steps: # 进入自动化步骤
-      # 第一步，下载代码仓库
-      # - name: Checkout
-      #   uses: actions/checkout@master
+      第一步，下载代码仓库
+      - name: Checkout
+        uses: actions/checkout@master
 
-      # 打包构建
-      # - name: Build
-      #   uses: actions/setup-node@master
-      # - run: npm install
-      # - run: npm run build
-      # # 将这些 .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json 文件打包在 release.tgz 中
-      # # 此处是为了在方便，在服务器中直接解压，获得所有文件，无需单独传
-      # # pm2 帮助我们在 Node服务器，启动项目的一个工具，具体可查看官网 https://github.com/Unitech/pm2
-      # - run: tar -zcvf release.tgz .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json
+      打包构建
+      - name: Build
+        uses: actions/setup-node@master
+      - run: npm install
+      - run: npm run build
+      # 将这些 .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json 文件打包在 release.tgz 中
+      # 此处是为了在方便，在服务器中直接解压，获得所有文件，无需单独传
+      # pm2 帮助我们在 Node服务器，启动项目的一个工具，具体可查看官网 https://github.com/Unitech/pm2
+      - run: tar -zcvf release.tgz .nuxt static nuxt.config.js package.json package-lock.json pm2.config.json
 
       # # 发布版本 Release
       # # 与 Github 建立连接( 此处用于将 release.tgz 上传到 github 上 )
@@ -54,24 +54,39 @@ jobs:
           asset_name: release.tgz
           asset_content_type: application/x-tgz
 
-      # 部署到服务器
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
+      - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        with:  
           host: ${{ secrets.HOST }} 
           username: ${{ secrets.USERNAME }} 
           password: ${{ secrets.PASSWORD }} 
           port: ${{ secrets.PORT }}
-          # 类似在服务端的终端-执行以下操作
-          # 1. 找到需要存放文件的地方
-          # 2. 从 Github 上将 release.tgz 复制一份放入文件内
-          # 3. 解压 release.tgz 文件
-          # 4. 安装插件
-          # 5. 重启 pm2, 并执行 pm2.config.json 内操作，
-          # 6. pm2.config.json 是 启动 项目，( npm start )
-          script: |
+          local_path: 'release.tgz'  # 对应我们项目build的文件夹路径
+          remote_path: '/root/myblog-nuxt'
+          script:
             cd /root/myblog-nuxt
-            git pull 
-            npm run build
+            tar zxvf release.tgz
             npm install --production
             pm2 reload pm2.config.json
+
+      # # 部署到服务器
+      # - name: Deploy
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }} 
+      #     username: ${{ secrets.USERNAME }} 
+      #     password: ${{ secrets.PASSWORD }} 
+      #     port: ${{ secrets.PORT }}
+      #     # 类似在服务端的终端-执行以下操作
+      #     # 1. 找到需要存放文件的地方
+      #     # 2. 从 Github 上将 release.tgz 复制一份放入文件内
+      #     # 3. 解压 release.tgz 文件
+      #     # 4. 安装插件
+      #     # 5. 重启 pm2, 并执行 pm2.config.json 内操作，
+      #     # 6. pm2.config.json 是 启动 项目，( npm start )
+      #     script: |
+      #       cd /root/myblog-nuxt
+      #       git pull 
+      #       npm run build
+      #       npm install --production
+      #       pm2 reload pm2.config.json
