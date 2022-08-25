@@ -63,7 +63,8 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "release.tgz" # 对应我们项目build的文件夹路径
           target: "/root/myblog-nuxt"
-          script: cd /root/myblog-nuxt
+          script: 
+            cd /root/myblog-nuxt
             tar zxvf release.tgz
             npm install --production
             pm2 reload pm2.config.json

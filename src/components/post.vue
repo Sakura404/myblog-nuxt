@@ -346,7 +346,7 @@ export default {
       this.nav = list;
     },
     randomImg() {
-      return require(`../assets/bg/${Math.floor(Math.random() * 16) + 1}.jpg`);
+      return require(`../assets/docsmall/${Math.floor(Math.random() * 16) + 1}.jpg`);
     },
     handleScroll() {
       const scrollTop =
