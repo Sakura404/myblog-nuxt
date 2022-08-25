@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest # 使用ubuntu系统镜像运行自动化脚本
     steps: # 进入自动化步骤
       # 第一步，下载代码仓库
-      - name: Checkout
-        uses: actions/checkout@master
+      # - name: Checkout
+      #   uses: actions/checkout@master
 
       # 打包构建
       # - name: Build
