@@ -56,15 +56,14 @@ jobs:
 
       - name: deploy file to server
         uses: appleboy/ssh-action@master
-        with:  
-          host: ${{ secrets.HOST }} 
-          username: ${{ secrets.USERNAME }} 
-          password: ${{ secrets.PASSWORD }} 
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          local_path: 'release.tgz'  # 对应我们项目build的文件夹路径
-          remote_path: '/root/myblog-nuxt'
-          script:
-            cd /root/myblog-nuxt
+          source: "release.tgz" # 对应我们项目build的文件夹路径
+          target: "/root/myblog-nuxt"
+          script: cd /root/myblog-nuxt
             tar zxvf release.tgz
             npm install --production
             pm2 reload pm2.config.json
@@ -73,9 +72,9 @@ jobs:
       # - name: Deploy
       #   uses: appleboy/ssh-action@master
       #   with:
-      #     host: ${{ secrets.HOST }} 
-      #     username: ${{ secrets.USERNAME }} 
-      #     password: ${{ secrets.PASSWORD }} 
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
       #     port: ${{ secrets.PORT }}
       #     # 类似在服务端的终端-执行以下操作
       #     # 1. 找到需要存放文件的地方
@@ -86,7 +85,7 @@ jobs:
       #     # 6. pm2.config.json 是 启动 项目，( npm start )
       #     script: |
       #       cd /root/myblog-nuxt
-      #       git pull 
+      #       git pull
       #       npm run build
       #       npm install --production
       #       pm2 reload pm2.config.json
