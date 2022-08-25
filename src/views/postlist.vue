@@ -187,7 +187,7 @@ export default {
     },
   },
   created() {
-    //  this.getPosts();
+    // . this.getPosts();
     this.getPhrase();
   },
 
