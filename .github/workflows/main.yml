@@ -79,7 +79,8 @@ jobs:
           # 4. 安装插件
           # 5. 重启 pm2, 并执行 pm2.config.json 内操作，
           # 6. pm2.config.json 是 启动 项目，( npm start )
-          script: cd /root/myblog-nuxt
+          script: 
+            cd /root/myblog-nuxt
             tar zxvf release.tgz
             npm install --production
             pm2 reload pm2.config.json
