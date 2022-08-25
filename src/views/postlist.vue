@@ -123,7 +123,9 @@ export default {
   },
   methods: {
     randomImg() {
-      return require(`../assets/docsmall/${Math.floor(Math.random() * 16) + 1}.jpg`);
+      return require(`../assets/docsmall/${
+        Math.floor(Math.random() * 16) + 1
+      }.jpg`);
     },
     onIntersect(entries) {
       this.$emit("onIntersect", entries);
