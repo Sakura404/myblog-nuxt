@@ -59,7 +59,7 @@ jobs:
         with:
           server: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           local_path: "./release.tgz" # 对应我们项目build的文件夹路径
           remote_path: "/root/myblog-nuxt"
