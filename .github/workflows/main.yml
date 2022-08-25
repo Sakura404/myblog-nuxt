@@ -65,6 +65,7 @@ jobs:
           remote_path: "/root/myblog-nuxt"
 
       # 部署到服务器
+
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -79,8 +80,9 @@ jobs:
           # 4. 安装插件
           # 5. 重启 pm2, 并执行 pm2.config.json 内操作，
           # 6. pm2.config.json 是 启动 项目，( npm start )
-          script: 
+          script: |
             cd /root/myblog-nuxt
+            wget https://github.com/Sakura404/myblog-nuxt/releases/latest/download/release.tgz -O release.tgz
             tar zxvf release.tgz
             npm install --production
             pm2 reload pm2.config.json
