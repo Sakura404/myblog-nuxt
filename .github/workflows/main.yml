@@ -55,38 +55,31 @@ jobs:
       #   asset_content_type: application/x-tgz
 
       - name: deploy file to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0
+        with:
+          server: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          local_path: "./release.tgz" # 对应我们项目build的文件夹路径
+          remote_path: "/root/myblog-nuxt"
+
+      # 部署到服务器
+      - name: Deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          source: "release.tgz" # 对应我们项目build的文件夹路径
-          target: "/root/myblog-nuxt"
-          script: 
-            cd /root/myblog-nuxt
+          # 类似在服务端的终端-执行以下操作
+          # 1. 找到需要存放文件的地方
+          # 2. 从 Github 上将 release.tgz 复制一份放入文件内
+          # 3. 解压 release.tgz 文件
+          # 4. 安装插件
+          # 5. 重启 pm2, 并执行 pm2.config.json 内操作，
+          # 6. pm2.config.json 是 启动 项目，( npm start )
+          script: cd /root/myblog-nuxt
             tar zxvf release.tgz
             npm install --production
             pm2 reload pm2.config.json
-
-      # # 部署到服务器
-      # - name: Deploy
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     password: ${{ secrets.PASSWORD }}
-      #     port: ${{ secrets.PORT }}
-      #     # 类似在服务端的终端-执行以下操作
-      #     # 1. 找到需要存放文件的地方
-      #     # 2. 从 Github 上将 release.tgz 复制一份放入文件内
-      #     # 3. 解压 release.tgz 文件
-      #     # 4. 安装插件
-      #     # 5. 重启 pm2, 并执行 pm2.config.json 内操作，
-      #     # 6. pm2.config.json 是 启动 项目，( npm start )
-      #     script: |
-      #       cd /root/myblog-nuxt
-      #       git pull
-      #       npm run build
-      #       npm install --production
-      #       pm2 reload pm2.config.json
