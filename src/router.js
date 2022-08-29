@@ -24,11 +24,7 @@ export function createRouter() {
       mode: 'history',
       base: process.env.BASE_URL,
       scrollBehavior(to, from, savedPosition) {
-         if (savedPosition) {
-            return savedPosition
-         } else {
-            return { top: 0 }
-         }
+         return { x: 0, y: 0 }
       },
    })
 

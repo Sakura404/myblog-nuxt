@@ -121,7 +121,7 @@ export default {
           this.$http.get(`api/posts/term/${term.id}`).then((r) => {
             if (r.data.code == 10000) {
               let item = { id: term.id, name: term.name, children: [] };
-              for (let post of r.data.data) item.children.push(post);
+              for (let post of r.data.data) item.children.unshift(post);
               this.archive.push(item);
             }
           });
@@ -139,7 +139,7 @@ export default {
   },
   head() {
     return {
-        title: '归档'
+      title: "归档",
     };
   },
 };
