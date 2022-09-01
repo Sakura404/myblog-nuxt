@@ -17,7 +17,7 @@
         <v-card-title> {{ title }} </v-card-title>
         <v-card-subtitle class="white--text">
           <v-icon small color="white">mdi-clock</v-icon>
-          {{ this.$Moment(date).fromNow() }}
+          {{ this.$Moment(date).calendar() }}
           &nbsp;
           <v-icon small color="white"> mdi-pen</v-icon>
           {{ author }}
@@ -48,7 +48,7 @@
     </div>
     <div v-else>
       <v-card-title>短句</v-card-title>
-      <v-card-subtitle>{{ this.$Moment(date).fromNow() }}</v-card-subtitle>
+      <v-card-subtitle>{{ this.$Moment(date).calendar() }}</v-card-subtitle>
       <v-card-text>
         <p>
           {{ content }}
