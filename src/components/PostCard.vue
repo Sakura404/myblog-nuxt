@@ -23,7 +23,7 @@
           {{ author }}
         </v-card-subtitle>
       </v-img>
-      <v-card-text> {{ excerpt }}...... </v-card-text>
+      <v-card-text> {{ excerpt || "......" }} </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>
         <v-row no-gutters>
@@ -53,7 +53,7 @@
         <p>
           {{ content }}
         </p>
-        <p class="text-end font-weight-bold">{{ author }}</p>
+        <p class="text-right font-weight-bold">{{ author }}</p>
       </v-card-text>
     </div>
   </v-card>
