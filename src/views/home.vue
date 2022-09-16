@@ -194,7 +194,7 @@ export default {
   background-attachment: fixed;
   background-repeat: repeat;
   background-position: center center;
-  background-size: contain  100% 100%;
+  /* background-size: contain ,100% 100%; */
   transition: background-image 1s;
 }
 
