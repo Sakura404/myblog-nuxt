@@ -19,9 +19,9 @@
       </v-card>
     </v-dialog>
 
-    <div class="sweeperline" v-for="(y, i) of gamearr" :key="i">
+    <div class="mineline" v-for="(y, i) of gamearr" :key="i">
       <span
-        class="sweeperblock sweeperblock-hidden"
+        class="mineblock mineblock-hidden"
         :style="blocksize"
         v-for="(x, n) of y"
         :key="n"
@@ -34,8 +34,9 @@
           victory();
           defeat(i, n);
         "
+        @contextmenu="mineMark"
         ><v-icon :style="blocksize" style="height: 40px; width: 40px">{{
-          x ? x : "&nbsp;"
+          x ? `x` : "&nbsp;"
         }}</v-icon></span
       >
     </div>
@@ -97,11 +98,11 @@ export default {
           this.gamearr[i][e] = 0;
         }
       }
-      let block = document.getElementsByClassName("sweeperblock");
+      let block = document.getElementsByClassName("mineblock");
       for (let a of block)
-        if (!a.classList.contains("sweeperblock-hidden")) {
-          a.classList.remove("sweeperblock-active");
-          a.classList.add("sweeperblock-hidden");
+        if (!a.classList.contains("mineblock-hidden")) {
+          a.classList.remove("mineblock-active");
+          a.classList.add("mineblock-hidden");
           a.style.setProperty("transition-delay", `0s`);
         }
     },
@@ -168,15 +169,15 @@ export default {
     },
     dig(y, x) {
       let blockItem = this.gamearr[y][x];
-      let blockDom =
-        document.getElementsByClassName("sweeperline")[y].children[x];
+      let blockDom = document.getElementsByClassName("mineline")[y].children[x];
       //检测方块是否被打开防止反复递归
       if (
         blockItem != "mdi-mine" &&
-        blockDom.classList.contains("sweeperblock-hidden")
+        blockDom.classList.contains("mineblock-hidden") &&
+        !blockDom.classList.contains("mineblock-mark")
       ) {
-        blockDom.classList.remove("sweeperblock-hidden");
-        blockDom.classList.add("sweeperblock-active");
+        blockDom.classList.remove("mineblock-hidden");
+        blockDom.classList.add("mineblock-active");
         if (blockItem == 0) {
           let around = [-1, 0, 1]; //检测周围九格
           for (let l of around) {
@@ -211,7 +212,7 @@ export default {
         for (let h = 0; h < this.Horizontal; h++) {
           let range = Math.sqrt(Math.pow(y - v, 2) + Math.pow(x - h, 2));
           let blockDom =
-            document.getElementsByClassName("sweeperline")[v].children[h];
+            document.getElementsByClassName("mineline")[v].children[h];
           blockDom.setAttribute(
             "style",
             `transition-delay:${(range * 0.1).toFixed(2)}s`
@@ -235,24 +236,29 @@ export default {
     },
     defeat(y, x) {
       let blockItem = this.gamearr[y][x];
-      let blockDom =
-        document.getElementsByClassName("sweeperline")[y].children[x];
-      blockDom.classList.remove("sweeperblock-hidden");
-      blockDom.classList.add("sweeperblock-active");
+      let blockDom = document.getElementsByClassName("mineline")[y].children[x];
+      if (blockDom.classList.contains("mineblock-mark")) return;
+      blockDom.classList.remove("mineblock-hidden");
+      blockDom.classList.add("mineblock-active");
       if (blockItem == "mdi-mine") this.gameState = "游戏结束";
     },
     victory() {
       if (
-        document.getElementsByClassName("sweeperblock-hidden").length ==
+        document.getElementsByClassName("mineblock-hidden").length ==
         this.mineTotal
       ) {
         this.gameState = "游戏胜利";
       }
     },
+    mineMark(event) {
+      event.preventDefault();
+      event.currentTarget.classList.toggle("mineblock-mark");
+      console.log(1);
+    },
     // setAnimation(y, x) {
     //   let around = [1, 0, -1];
     //   document
-    //     .getElementsByClassName("sweeperline")[y].children[x].setAttribute(
+    //     .getElementsByClassName("mineline")[y].children[x].setAttribute(
     //       "style",
     //       `transition-delay:0.2s`
     //     );
@@ -275,7 +281,7 @@ export default {
     //           x + i * r1 < this.Horizontal
     //         ) {
     //           let blockDom =
-    //             document.getElementsByClassName("sweeperline")[y + i * l1]
+    //             document.getElementsByClassName("mineline")[y + i * l1]
     //               .children[x + i * r1];
 
     //           blockDom.setAttribute(
@@ -301,7 +307,7 @@ export default {
 };
 </script>
 <style>
-.sweeperblock {
+.mineblock {
   position: relative;
   transition-duration: 0.3s;
   display: inline-block;
@@ -310,23 +316,33 @@ export default {
   background-color: darkorange;
   color: #000;
 }
-.sweeperblock i {
+.mineblock i {
   transition-duration: 0.3s;
 }
-.sweeperblock-flag i {
+.mineblock-flag i {
   visibility: visible;
 }
-.sweeperblock-hidden i {
+.mineblock-hidden i {
   color: rgba(1, 1, 1, 0);
   visibility: hidden;
 }
-.sweeperblock-active {
+.mineblock-hidden.mineblock-mark i::before {
+  visibility: visible;
+  content: "\F023B";
+  display: inline-block;
+  font: normal normal normal 24px/1 "Material Design Icons";
+  font-size: inherit;
+  text-rendering: auto;
+  line-height: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+.mineblock-active {
   background-color: rgb(221, 217, 217) !important;
 }
-/* .sweeperblock:hover {
+/* .mineblock:hover {
   background-color: rgb(82, 81, 81);
 } */
-.sweeperblock:focus {
+.mineblock:focus {
   background-color: gray;
 }
 .minesweeper {

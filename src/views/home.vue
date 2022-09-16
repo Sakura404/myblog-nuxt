@@ -101,7 +101,7 @@ export default {
       ["mdi-sort-bool-descending", "时间轴", "/timelines"],
       ["mdi-file", "归档", "/archive"],
       ["mdi-gamepad-variant", "游戏", "/game"],
-      ["mdi-link", "友情链接"],
+      ["mdi-link", "友情链接",'chat.senkaryouran.top'],
       ["mdi-alert-octagon", "关于", "/about"],
     ],
     biyinapi: null,
