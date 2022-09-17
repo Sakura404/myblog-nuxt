@@ -35,8 +35,8 @@
           defeat(i, n);
         "
         @contextmenu="mineMark"
-        ><v-icon :style="blocksize" style="height: 40px; width: 40px">{{
-          x ? `x` : "&nbsp;"
+        ><v-icon :style="blocksize" large style="height: 40px; width: 40px">{{
+          !x ? "&nbsp;" : typeof x == "number" ? `mdi-numeric-${x}` : x
         }}</v-icon></span
       >
     </div>
@@ -99,12 +99,14 @@ export default {
         }
       }
       let block = document.getElementsByClassName("mineblock");
-      for (let a of block)
+      for (let a of block) {
+        a.classList.remove("mineblock-mark");
         if (!a.classList.contains("mineblock-hidden")) {
           a.classList.remove("mineblock-active");
           a.classList.add("mineblock-hidden");
           a.style.setProperty("transition-delay", `0s`);
         }
+      }
     },
     initGame(row, col) {
       if (this.initflag) {
